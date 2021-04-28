@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopappwithapi/components.dart';
 import 'package:shopappwithapi/cubit/cubit.dart';
 import 'package:shopappwithapi/cubit/states.dart';
+import 'package:shopappwithapi/network/local/cache_helper.dart';
 import 'package:shopappwithapi/screens/register_screen.dart';
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:shopappwithapi/screens/shop_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -21,24 +22,16 @@ class LoginScreen extends StatelessWidget {
           if (state is ShopLoginSuccessState) {
             if (state.loginModel.status) {
               print(state.loginModel.message);
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              CacheHelper.saveData(
+                      key: 'token', value: state.loginModel.data.token)
+                  .then((value) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => ShopLayout()));
+              });
             } else {
               print(state.loginModel.message);
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              showToast(
+                  text: state.loginModel.message, state: ToastStates.ERROR);
             }
           }
         },

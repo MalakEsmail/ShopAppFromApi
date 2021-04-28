@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopappwithapi/models/boarding_model.dart';
+import 'package:shopappwithapi/network/local/cache_helper.dart';
 import 'package:shopappwithapi/screens/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -26,6 +27,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         title: 'OnBoard title 3',
         body: 'OnBoard body 3'),
   ];
+  void submit() {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  submit();
                 },
                 child: Text(
                   'Skip',
@@ -83,10 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast == true) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
+                      submit();
                     } else {
                       pageController.nextPage(
                           duration: Duration(milliseconds: 750),

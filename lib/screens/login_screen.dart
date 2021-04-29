@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopappwithapi/components.dart';
-import 'package:shopappwithapi/cubit/cubit.dart';
-import 'package:shopappwithapi/cubit/states.dart';
+import 'package:shopappwithapi/cubit/login_cubit/cubit.dart';
+import 'package:shopappwithapi/cubit/login_cubit/states.dart';
 import 'package:shopappwithapi/network/local/cache_helper.dart';
 import 'package:shopappwithapi/screens/register_screen.dart';
 import 'package:conditional_builder/conditional_builder.dart';

@@ -110,3 +110,16 @@ Color chooseToastColor(ToastStates state) {
   }
   return color;
 }
+
+String token = '';
+/*
+void signOut(context){
+CacheHelper.removeData(key: 'token').then((value) {
+                  if (value) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  }
+                });
+}
+
+ */

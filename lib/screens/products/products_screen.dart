@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopappwithapi/components.dart';
 import 'package:shopappwithapi/cubit/shop_app_cubit/shop_app_cubit.dart';
 import 'package:shopappwithapi/cubit/shop_app_cubit/shop_app_states.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,21 +13,28 @@ import 'package:shopappwithapi/models/home_model.dart';
 class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, ShopStates>(
-        builder: (context, state) {
-          return ConditionalBuilder(
-              condition: ShopCubit.get(context).homeModel != null &&
-                  ShopCubit.get(context).categoriesModel != null,
-              builder: (context) => productsBuilder(
-                  ShopCubit.get(context).homeModel,
-                  ShopCubit.get(context).categoriesModel),
-              fallback: (context) =>
-                  Center(child: CircularProgressIndicator()));
-        },
-        listener: (context, state) {});
+    return BlocConsumer<ShopCubit, ShopStates>(builder: (context, state) {
+      return ConditionalBuilder(
+          condition: ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
+          builder: (context) => productsBuilder(
+              ShopCubit.get(context).homeModel,
+              ShopCubit.get(context).categoriesModel,
+              context),
+          fallback: (context) => Center(child: CircularProgressIndicator()));
+    }, listener: (context, state) {
+      if (state is ShopSuccessChangeFavoriteState) {
+        if (!state.changeFavoriteModel.status) {
+          showToast(
+              text: state.changeFavoriteModel.message,
+              state: ToastStates.ERROR);
+        }
+      }
+    });
   }
 
-  Widget productsBuilder(HomeModel homeModel, CategoriesModel categoriesModel) {
+  Widget productsBuilder(HomeModel homeModel, CategoriesModel categoriesModel,
+      BuildContext context) {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -96,8 +104,10 @@ class ProductsScreen extends StatelessWidget {
               crossAxisCount: 2,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              children: List.generate(homeModel.data.products.length,
-                  (index) => buildGirdProduct(homeModel.data.products[index])),
+              children: List.generate(
+                  homeModel.data.products.length,
+                  (index) => buildGirdProduct(
+                      homeModel.data.products[index], context)),
             ),
           ),
         ],
@@ -105,7 +115,7 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildGirdProduct(ProductsModel model) {
+  Widget buildGirdProduct(ProductsModel model, BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(
@@ -158,12 +168,22 @@ class ProductsScreen extends StatelessWidget {
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough)),
                     Spacer(),
-                    IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          Icons.favorite_border,
-                        ),
-                        onPressed: () {})
+                    CircleAvatar(
+                      radius: 15.0,
+                      backgroundColor:
+                          ShopCubit.get(context).favorites[model.id]
+                              ? Colors.red
+                              : Colors.grey,
+                      child: IconButton(
+                          icon: Icon(
+                            Icons.favorite_border,
+                            size: 14.0,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            ShopCubit.get(context).changeFavorites(model.id);
+                          }),
+                    )
                   ],
                 )
               ],

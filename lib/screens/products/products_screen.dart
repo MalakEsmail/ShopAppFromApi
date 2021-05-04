@@ -34,7 +34,7 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget productsBuilder(HomeModel homeModel, CategoriesModel categoriesModel,
-      BuildContext context) {
+       context) {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -115,7 +115,7 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildGirdProduct(ProductsModel model, BuildContext context) {
+  Widget buildGirdProduct(ProductsModel model, context) {
     return Container(
       color: Colors.white,
       child: Column(

@@ -21,10 +21,11 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is ShopLoginSuccessState) {
             if (state.loginModel.status) {
-              print(state.loginModel.message);
+             
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data.token)
                   .then((value) {
+                    token=state.loginModel.data.token;
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => ShopLayout()));
               });

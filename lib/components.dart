@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopappwithapi/network/local/cache_helper.dart';
+import 'package:shopappwithapi/screens/login_screen.dart';
 
 Widget defaultFormField({
   @required TextEditingController controller,
@@ -112,7 +114,7 @@ Color chooseToastColor(ToastStates state) {
 }
 
 String token = '';
-/*
+
 void signOut(context){
 CacheHelper.removeData(key: 'token').then((value) {
                   if (value) {
@@ -122,4 +124,4 @@ CacheHelper.removeData(key: 'token').then((value) {
                 });
 }
 
- */
+ 

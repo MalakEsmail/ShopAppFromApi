@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) => ShopCubit()
               ..getHomeData()
-              ..getCategories()..getFavorite())
+              ..getCategories()
+              ..getFavorite()
+              ..getUserData())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

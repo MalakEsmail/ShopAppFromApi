@@ -14,10 +14,7 @@ import 'package:shopappwithapi/screens/products/products_screen.dart';
 import 'package:shopappwithapi/screens/settings/settings_screen.dart';
 
 import '../../models/favorites_model.dart';
-import '../../models/favorites_model.dart';
 import '../../network/end_points.dart';
-import 'shop_app_states.dart';
-import 'shop_app_states.dart';
 import 'shop_app_states.dart';
 
 class ShopCubit extends Cubit<ShopStates> {

@@ -10,11 +10,12 @@ import 'package:shopappwithapi/screens/shop_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    var emailController = TextEditingController();
+  var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
+  @override
+  Widget build(BuildContext context) {
+    
     return BlocProvider(
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
